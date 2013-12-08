@@ -1,0 +1,34 @@
+extends layout
+
+block append vars
+  - var bodyClass = 'article'
+
+block prepend title
+  | #{ page.title + " - "}
+
+block header
+  h1= page.title
+
+block content
+  article
+    h1= page.title
+
+    .content
+      != typogr(page.html).typogrify()
+
+      .details
+        = moment.utc(page.date).format('DD MMMM YYYY')
+        |   by Jon Merrifield
+
+    #disqus_thread
+
+  script.
+    var disqus_shortname = '#{locals.disqus_id}';
+    var disqus_identifier = '#{page.title}';
+    var disqus_url = '#{locals.url}#{page.getUrl()}';
+
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();

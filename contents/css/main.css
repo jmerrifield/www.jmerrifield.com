@@ -1,0 +1,230 @@
+body {
+  background-color: #333333;
+  color: #444444;
+  font-family: Helvetica;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+a {
+  text-decoration: none;
+  color: #5C80B1;
+}
+
+a:hover {
+  color: Red;
+}
+
+p,
+pre {
+  margin-bottom: 10px;
+}
+
+em {
+  font-style: italic;
+}
+
+h1 {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 7px;
+}
+
+h2 {
+  color: silver;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+
+/* Page header */
+#header {
+  background-color: Black;
+  text-align: left;
+  margin: 0 0 30px 0;
+  width: 100%;
+  padding: 15px;
+}
+
+/* Page layout */
+#content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Page footer */
+footer {
+  background-color: Black;
+  text-align: center;
+  margin: 30px 0 0 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 2px;
+}
+
+/* Index page */
+.index .posts li {
+  list-style: none;
+  line-height: 30px;
+  color: silver;
+}
+
+.index .posts li a {
+  color: white;
+}
+
+.index .posts li a:hover {
+  color: red;
+}
+
+/* Article page */
+.article article {
+  border: 2px solid silver;
+
+  background-color: Black;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-topleft: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-top-left-radius: 10px;
+}
+
+.article article h1 {
+  font-size: 30px;
+  margin: 0 0 0 0;
+  padding: 25px;
+}
+
+.article article .details {
+  color: silver;
+  margin-bottom: 20px;
+}
+
+.article article .content {
+  background-color: White;
+  padding: 25px;
+}
+
+.article article .footer {
+  background-color: Black;
+  padding: 6px;
+}
+
+/* Comment threads */
+#disqus_thread {
+  color: white;
+  padding: 25px;
+}
+
+/* Code */
+/*
+
+Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+
+*/
+
+pre code {
+  display: block;
+  padding: 15px;
+  line-height: 19px;
+
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+}
+
+code {
+  padding: 4px;
+  background: #002b36;
+  color: #839496;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+pre .comment,
+pre .template_comment,
+pre .diff .header,
+pre .doctype,
+pre .lisp .string,
+pre .javadoc {
+  color: #586e75;
+  font-style: italic;
+}
+
+pre .keyword,
+pre .css .rule .keyword,
+pre .winutils,
+pre .javascript .title,
+pre .method,
+pre .addition,
+pre .css .tag,
+pre .lisp .title {
+  color: #859900;
+}
+
+pre .number,
+pre .command,
+pre .string,
+pre .tag .value,
+pre .phpdoc,
+pre .tex .formula,
+pre .regexp,
+pre .hexcolor {
+  color: #2aa198;
+}
+
+pre .title,
+pre .localvars,
+pre .function .title,
+pre .chunk,
+pre .decorator,
+pre .builtin,
+pre .built_in,
+pre .lisp .title,
+pre .identifier,
+pre .title .keymethods,
+pre .id {
+  color: #268bd2;
+}
+
+pre .tag .title,
+pre .rules .property,
+pre .django .tag .keyword {
+  font-weight: bold;
+}
+
+pre .attribute,
+pre .variable,
+pre .instancevar,
+pre .lisp .body,
+pre .smalltalk .number,
+pre .constant,
+pre .class .title,
+pre .parent,
+pre .haskell .label {
+  color: #b58900;
+}
+
+pre .preprocessor,
+pre .pi,
+pre .shebang,
+pre .symbol,
+pre .diff .change,
+pre .special,
+pre .keymethods,
+pre .attr_selector,
+pre .important,
+pre .subst,
+pre .cdata {
+  color: #cb4b16;
+}
+
+pre .deletion {
+  color: #dc322f;
+}
+
+pre .tex .formula {
+  background: #073642;
+}

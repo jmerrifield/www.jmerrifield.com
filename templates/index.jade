@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Posts
+  ul.posts
+    each article in articles
+      li
+        a(href=article.url)= article.title
+        span= moment.utc(article.date).format(' (DD MMMM YYYY) ')
