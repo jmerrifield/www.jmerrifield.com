@@ -1,0 +1,14 @@
+extends layout
+
+block append vars
+  - var activeNav = 'About Me'
+
+block content
+  .main-content
+    != page.html
+
+  each links, sectionName in page.metadata.links
+    h2= sectionName
+
+    each href, name in links
+      p: a(href=href)= name

@@ -1,9 +1,9 @@
 {
   "locals": {
-    "url": "http://yagri.com",
-    "name": "yagri.com",
+    "url": "http://www.jmerrifield.com",
+    "name": "Jon Merrifield",
     "owner": "Jon Merrifield",
-    "description": "You Ain't Gonna Read It",
+    "description": "Jon Merrifield",
     "disqus_id": "yagricom",
     "ga_key": "UA-12677574-1"
   },
@@ -22,6 +22,8 @@
     "smartypants": true
   },
   "paginator": {
+    "first": "software/index.html",
+    "articles": "software-articles",
     "perPage": 20
   }
 }

@@ -1,6 +1,7 @@
 !!! 5
 block vars
   - var bodyClass = 'index'
+  - var activeNav = ''
 
 html(lang='en')
   head
@@ -39,10 +40,19 @@ html(lang='en')
 
   body(class=bodyClass)
     header#header
-      span.tagline= locals.description
+      ul.nav
+        li: h1: a(href='/') Jon Merrifield
+        li: a(class=activeNav == 'About Me' ? 'active' : '', href='/') About Me
+        li: a(class=activeNav == 'Software Blog' ? 'active' : '', href='/software/') Software Blog
 
     div#content
       block content
 
     footer
-      p footer
+      ul.nav
+        li.icon: a(href='mailto:jon@jmerrifield.com') &#xe80b;
+        li.icon: a(href='https://twitter.com/jon_merrifield') &#xe80d;
+        li.icon: a(href='https://www.facebook.com/jmerrifield') &#xe802;
+        li.icon: a(href='http://www.linkedin.com/profile/view?id=9701957') &#xe806;
+        li.icon: a(href='https://github.com/jmerrifield') &#xe80c;
+        li.icon: a(href='https://google.com/+JonMerrifield') &#xe801;

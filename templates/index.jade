@@ -1,9 +1,11 @@
 extends layout
 
+block append vars
+  - var activeNav = 'Software Blog'
+
 block content
-  h1 Posts
-  ul.posts
-    each article in articles
-      li
-        a(href=article.url)= article.title
-        span= moment.utc(article.date).format(' (DD MMMM YYYY) ')
+  h2 Posts
+
+  each article in articles
+    p
+      a(href=article.url)= article.title + ' ' + moment.utc(article.date).format(' (DD MMMM YYYY) ')
