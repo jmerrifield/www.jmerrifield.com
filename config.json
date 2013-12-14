@@ -23,7 +23,7 @@
   },
   "paginator": {
     "first": "software/index.html",
-    "articles": "software-articles",
+    "articles": "software/articles",
     "perPage": 20
   }
 }

@@ -16,11 +16,13 @@ module.exports = (env, callback) ->
     options[key] ?= defaults[key]
 
   getArticles = (contents) ->
+    _ = env.locals._
+
     # helper that returns a list of articles found in *contents*
     # note that each article is assumed to have its own directory in the articles directory
 
-    # TODO: Make this generic and driven by config
-    articles = contents.software.articles._.directories.map (item) -> item.index
+    articleContent = _.reduce(options.articles.split('/'), _.result, contents)
+    articles = articleContent._.directories.map (item) -> item.index
     articles.sort (a, b) -> b.date - a.date
     return articles
 
