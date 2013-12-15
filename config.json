@@ -5,7 +5,7 @@
     "owner": "Jon Merrifield",
     "description": "Jon Merrifield",
     "disqus_id": "yagricom",
-    "ga_key": "UA-12677574-1"
+    "ga_key": "UA-12677574-4"
   },
   "plugins": [
     "./plugins/paginator.coffee"
