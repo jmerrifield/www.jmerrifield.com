@@ -4,7 +4,6 @@ build:
     - npm-install
 
     - script:
-        name: echo nodejs information
+        name: build site
         code: |
-          echo "node version $(node -v) running"
-          echo "npm version $(npm -v) running"
+          npm run build
