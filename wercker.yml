@@ -7,3 +7,20 @@ build:
         name: build site
         code: |
           npm run build
+
+deploy:
+  steps:
+    - script:
+        name: Configure git
+        code: |-
+          git config --global user.email "pleasemailus@wercker.com"
+          git config --global user.name "wercker"
+
+    - script:
+        name: Deploy to github pages
+        code: |-
+          cd build
+          git init
+          git add .
+          git commit -m "deploy commit from $WERCKER_STARTED_BY"
+          git push -f $GIT_REMOTE master:gh-pages
