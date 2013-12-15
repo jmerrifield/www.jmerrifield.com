@@ -14,8 +14,7 @@ block content
   article
     h1= page.title
 
-    .content
-      != page.html
+    .content!= page.html
 
       .details
         = moment.utc(page.date).format('DD MMMM YYYY')
