@@ -22,5 +22,5 @@ deploy:
           cd build
           git init
           git add .
-          git commit -m "deploy commit from $WERCKER_STARTED_BY"
+          git commit -m "deploy commit for $WERCKER_GIT_COMMIT"
           git push -f $GIT_REMOTE master:gh-pages
