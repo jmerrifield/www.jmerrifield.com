@@ -21,6 +21,9 @@
     "smartLists": true,
     "smartypants": true
   },
+  "ignore": [
+    "**/.DS_Store"
+  ],
   "paginator": {
     "first": "software/index.html",
     "articles": "software/articles",
