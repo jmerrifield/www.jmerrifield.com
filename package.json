@@ -3,5 +3,9 @@
     "moment": "2.3.x",
     "lodash": "~2.4.1"
   },
-  "repository": "none"
+  "repository": "none",
+  "scripts": {
+    "start": "wintersmith preview",
+    "build": "wintersmith build -X"
+  }
 }
