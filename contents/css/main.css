@@ -52,6 +52,20 @@ h2 {
   margin-bottom: 7px;
 }
 
+h3 {
+  color: silver;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+blockquote {
+  border-left: 4px solid silver;
+  padding: 0 15px;
+}
+
+section {
+  padding-bottom: 10px;
+}
 
 /* Page header */
 #header {
@@ -151,6 +165,15 @@ footer a {
   margin: 0 0 0 0;
   padding-top: 40px;
   padding-bottom: 5px;
+}
+
+article h2,
+article h3 {
+  color: #173575;
+}
+
+article blockquote {
+  border-left: 4px solid #173575;
 }
 
 .article article .details {

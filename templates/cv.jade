@@ -1,0 +1,50 @@
+extends layout
+
+block append vars
+  - var bodyClass = 'article'
+  - var activeNav = 'CV'
+
+block prepend title
+  | #{ page.title + " - "}
+
+block header
+  h1= page.title
+
+block content
+  article
+    h1= page.title
+
+    .content
+      section: blockquote!= page.html
+
+      h2 Experience
+      - each experience in contents.cv.experience
+        - var exp = experience.metadata
+        section
+          header
+            h3
+              - var start = moment.utc(exp.start).format('MMMM YYYY')
+              - var end = moment.utc(exp.end).format('MMMM YYYY') || 'present'
+              | #{exp.company} - #{exp.position} (#{start} - #{end})
+
+            p= exp.location
+
+            - each tag in exp.tags
+              code= tag
+              &nbsp;
+
+          p!= experience.html
+
+      h2 Education
+      - each education in contents.cv.education
+        - var edu = education.metadata
+        section
+          header
+            h3
+              - var start = moment.utc(edu.start).format('MMMM YYYY')
+              - var end = moment.utc(edu.end).format('MMMM YYYY') || 'present'
+              | #{edu.institution} - #{edu.qualification} (#{start} - #{end})
+
+          p!= education.html
+
+
