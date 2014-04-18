@@ -1,6 +1,6 @@
 ---
 title: Lessons from Snowboard Teaching
-date: 2014-02-16 12:00
+date: 2014-04-18 12:00
 template: article.jade
 ---
 
