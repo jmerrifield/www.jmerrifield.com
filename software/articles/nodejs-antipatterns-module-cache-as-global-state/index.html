@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Node.js Antipatterns: Module Cache as Global State - Jon Merrifield
+    </title>
+    <link rel="author" href="http://www.jmerrifield.com">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-12677574-4', 'jmerrifield.com');
+      ga('send', 'pageview');
+      
+    </script>
+  </head>
+  <body class="article">
+    <header id="header">
+      <ul class="nav">
+        <li>
+          <h1><a href="/">Jon Merrifield</a></h1>
+        </li>
+        <li><a href="/">About Me</a></li>
+        <li><a href="/software/" class="active">Software Blog</a></li>
+      </ul>
+    </header>
+    <div id="content">
+      <article>
+        <h1>Node.js Antipatterns: Module Cache as Global State</h1>
+        <div class="content"><p>I want to share something I’ve been considering an anti-pattern, involving Node’s module cache. Specifically, initializing a module in one part of the program, knowing that subsequent <code>require</code> calls will return the already-initialized module.</p>
+<p>Node caches modules internally, which makes this sort of thing possible:</p>
+<pre><code class="lang-javascript"><span class="comment">// index.js (entry point of app)</span>
+
+<span class="keyword">var</span> redisConnection = <span class="comment">/* Redis initialization */</span>
+
+<span class="built_in">require</span>(<span class="string">'./session-store'</span>).init({
+  connection: redisConnection
+})
+
+<span class="built_in">require</span>(<span class="string">'./some-other-module'</span>)
+</code></pre>
+<pre><code class="lang-javascript"><span class="comment">// some-other-module.js</span>
+
+<span class="keyword">var</span> sessions = <span class="built_in">require</span>(<span class="string">'./session-store'</span>)
+
+<span class="comment">// sessions is already configured thanks to the .init call in index.js</span>
+sessions.get(sessionId, <span class="function"><span class="keyword">function</span> <span class="params">(err, data)</span> {</span>
+  console.log(<span class="string">'Session data:'</span>, data)
+})
+</code></pre>
+<p>In <code>some-other-module</code> we are assured that <code>sessions</code> is the same instance of <code>./session-store</code> that we initialized in <code>index.js</code>. This gives us an opportunity to pre-configure a module in your program’s entry point, and other parts of the program can easily grab a configured instance of that module.</p>
+<p>Don’t be fooled, this is not a good idea!</p>
+<p>Firstly, Node <a href="http://nodejs.org/api/modules.html#modules_module_caching_caveats">does not guarantee this behavior</a> in all situations. Personally I’ve never seen two <code>require</code> calls return different instances of a module, but that’s most likely down to my usage patterns. In particular, on my current project we’re supplying a custom <code>NODE_PATH</code> so that all <code>require</code> paths are relative to the project root.</p>
+<p>More significantly, <strong>this is just global state</strong>. All the well-worn advice about the evils of global variables applies here. Any part of the system can change this state. Relying on one part of the system to set global state <em>before</em> another part of the system tries to use it, makes the system very hard to reason about and debug, and tends to make code reuse a lot harder. If you suddenly need a second instance of that module (e.g. a secondary session store talking to a different database) then a large amount of re-work would be needed.</p>
+<p>It’s not always ‘bad’ to do this. It’s reasonable to memoize expensive lookups inside a module, and in that case you can encapsulate the cache data and make the lookup transparent, so that the consumer neither needs to know, nor can it interfere with, the sequence of operations.</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> cachedData
+
+module.exports.getData = <span class="function"><span class="keyword">function</span> <span class="params">(callback)</span> {</span>
+  <span class="keyword">if</span> (cachedData) {
+    <span class="keyword">return</span> process.nextTick(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span> callback(cachedData) })
+  }
+
+  <span class="built_in">require</span>(<span class="string">'expensiveDataSource'</span>).fetchData(<span class="function"><span class="keyword">function</span> <span class="params">(data)</span> {</span>
+    cachedData = data; callback(data)
+  })
+}
+</code></pre>
+<p>Generally though, if a module is stateful, it’s better to have it return a new instance of an object (or function) that contains the state and provides the interface to manipulate it. Make it the responsibility of the consumer to keep track of configured instances. It’s also helpful to provide a narrow interface that makes it difficult to inadvertently try and use an invalid instance.</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> config
+
+module.exports.init = <span class="function"><span class="keyword">function</span> <span class="params">(c)</span> {</span>
+  config = c
+}
+
+module.exports.doStuff = <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  <span class="keyword">return</span> doThingsWith(config)
+}
+</code></pre>
+<p>Becomes:</p>
+<pre><code class="lang-javascript">module.exports.init = <span class="function"><span class="keyword">function</span> <span class="params">(config)</span> {</span>
+  <span class="keyword">if</span> (!configOk(config)) {
+    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'this config will result in a broken instance!'</span>)
+  }
+
+  <span class="keyword">return</span> {
+    doStuff: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+      <span class="keyword">return</span> doThingsWith(config)
+    }
+  }
+}
+</code></pre>
+<p>Now, we have a fairly strong guarantee that nobody will be able to call <code>doStuff</code> without having first configured the module with valid settings (in the first example, this would have been easy to do inadvertently). In addition, we’re free to use multiple instances of this module with different configurations if that becomes useful.</p>
+<p>Sadly this makes it more difficult for ‘far-away’ parts of the program to make use of pre-configured modules. Passing them around through a long dependency chain can get very verbose and hard to keep track of. IoC containers are very popular in the Java and .NET world for dealing with this, but they are not so common in the Node community (<a href="https://github.com/cujojs/wire">wire</a> seems to be the main contender at the time of writing). Whether you investigate an IoC tool, or find some other acceptable way of passing around configured module instances, it’s worth the effort to remove this avenue of complexity.</p>
+
+          <div class="details">07 April 2014  by Jon Merrifield
+          </div></div>
+        <div id="disqus_thread"></div>
+      </article>
+      <script>
+        var disqus_shortname = 'yagricom';
+        var disqus_identifier = 'Node.js Antipatterns: Module Cache as Global State';
+        var disqus_url = 'http://www.jmerrifield.com/software/articles/nodejs-antipatterns-module-cache-as-global-state/';
+        
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <footer>
+      <ul class="nav">
+        <li class="icon"><a href="mailto:jon@jmerrifield.com">&#59398;</a></li>
+        <li class="icon"><a href="https://twitter.com/jon_merrifield">&#59396;</a></li>
+        <li class="icon"><a href="https://www.facebook.com/jmerrifield">&#59393;</a></li>
+        <li class="icon"><a href="http://www.linkedin.com/profile/view?id=9701957">&#59395;</a></li>
+        <li class="icon"><a href="https://github.com/jmerrifield">&#59392;</a></li>
+        <li class="icon"><a href="http://stackoverflow.com/users/74152/jon-m">&#59397;</a></li>
+        <li class="icon"><a href="https://google.com/+JonMerrifield">&#59394;</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

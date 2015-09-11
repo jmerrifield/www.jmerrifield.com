@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Rendering Text With ASP.NET - Jon Merrifield
+    </title>
+    <link rel="author" href="http://www.jmerrifield.com">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-12677574-4', 'jmerrifield.com');
+      ga('send', 'pageview');
+      
+    </script>
+  </head>
+  <body class="article">
+    <header id="header">
+      <ul class="nav">
+        <li>
+          <h1><a href="/">Jon Merrifield</a></h1>
+        </li>
+        <li><a href="/">About Me</a></li>
+        <li><a href="/software/" class="active">Software Blog</a></li>
+      </ul>
+    </header>
+    <div id="content">
+      <article>
+        <h1>Rendering Text With ASP.NET</h1>
+        <div class="content"><p>We had a user story at work recently which required a simple summary report page to be created, for viewing inside a JavaScript popup, and also to be downloadable as a text file.  We decided to create a new ASPX page, not using the normal master page so there was no visual chrome, just the report itself.  It was easy to create a popup containing an iframe to display the report itself, and this kept the report logic from cluttering up the main page.</p>
+<p>As the report page was read-only, and quite simple, I opted not to use server controls, in line with my growing dislike of the whole <a href="http://codebetter.com/blogs/rob.conery/archive/2009/04/22/i-spose-i-ll-just-say-it-you-should-learn-mvc.aspx">abstraction wrapped in deception covered in lie sauce</a> issue around webforms.  I wrote a simple code behind class to grab the input parameter from the query string, pull the relevant data from the repositories, and expose the data using a protected property on the page.</p>
+<pre><code class="lang-cs"><span class="keyword">public</span> <span class="keyword">class</span> CustomerSummaryPage : Page
+{
+  <span class="keyword">protected</span> Customer Customer { <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }
+
+  <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">OnLoad</span>(EventArgs e)
+  {
+    <span class="comment">// Don't need viewstate as we have no server controls</span>
+    <span class="comment">// and aren't even submitting any data back</span>
+    EnableViewState = <span class="keyword">false</span>;
+
+    <span class="comment">// In production, more robust input parsing required!</span>
+    <span class="keyword">int</span> customerId = <span class="keyword">int</span>.Parse(Request.QueryString[<span class="string">"customerId"</span>]);
+
+    <span class="comment">// Expose the data to the view</span>
+    Customer = <span class="keyword">new</span> Repository().GetCustomerById(customerId);
+  }
+}
+</code></pre>
+<p>Then the .aspx file uses clean markup with embedded server tags to render a simple summary report:</p>
+<pre><code class="lang-xml"><span class="vbscript">&lt;%@ Page Language=<span class="string">"C#"</span> Inherits=<span class="string">"AspNetText.CustomerSummaryPage"</span> %&gt;</span>
+<span class="tag">&lt;<span class="title">html</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Customer Summary<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Customer <span class="vbscript">&lt;%= Customer.Id %&gt;</span> (<span class="vbscript">&lt;%= Customer.Name %&gt;</span>)<span class="tag">&lt;/<span class="title">h1</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span>&gt;</span>Address: <span class="vbscript">&lt;%= Customer.Address %&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">p</span>&gt;</span>Phone: <span class="vbscript">&lt;%= Customer.PhoneNumber %&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Past orders<span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+    <span class="vbscript">&lt;% foreach (var order <span class="keyword">in</span> Customer.PastOrders) { %&gt;</span>
+      <span class="tag">&lt;<span class="title">div</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">h3</span>&gt;</span><span class="vbscript">&lt;%= order.Id %&gt;</span> (<span class="vbscript">&lt;%= order.Ref %&gt;</span>)<span class="tag">&lt;/<span class="title">h3</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">p</span>&gt;</span>Placed on: <span class="vbscript">&lt;%= order.Placed %&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+        <span class="tag">&lt;<span class="title">p</span>&gt;</span>Total value: £<span class="vbscript">&lt;%= order.TotalValue %&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+      <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+    <span class="vbscript">&lt;% } %&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">html</span>&gt;</span>
+</code></pre>
+<p>Notice how clean this looks compared to a normal ASP.NET page covered in server controls, it’s more like an MVC view.  When we load this page up and check the source, the goodness continues:</p>
+<p><img src="/software/articles/rendering-text-with-asp-net/markup.png" alt="Markup"></p>
+<p>The page itself is unremarkable, but easily styled and displayed within a popup iframe somewhere:</p>
+<p><img src="/software/articles/rendering-text-with-asp-net/html.png" alt="Rendered page"></p>
+<p>The interesting bit starts when we look at fulfilling the text-file export part of the requirement.  There are many different ways we can build up a text string, maybe override the ToString() method of each class to build up a nice description, or use the visitor pattern to populate a StringBuilder, among other ideas.  As much as I like the visitor pattern, it’s not entirely obvious to the uninitiated, and as we’re creating text for human consumption it would be nice not to have all our formatting bits and pieces buried in code.</p>
+<p>If you think about it, ASP.NET is really just a fancy text templating system, taking our .aspx files, and at runtime replacing our server tags with real values, although this aspect is hard to appreciate when you’re looking at a page loaded with DataGrids and hidden ViewState fields…  The point being that we’re not tied to rendering HTML, we can use this power to render whatever we want, and with a few hints to the browser as to what we’re sending it, we can get a real quick-and-easy text report for our users:</p>
+<pre><code class="lang-xml"><span class="vbscript">&lt;%@ Page Language=<span class="string">"C#"</span> Inherits=<span class="string">"AspNetText.CustomerSummaryPage"</span> %&gt;</span>
+<span class="vbscript">&lt;% <span class="built_in">Response</span>.ContentType = <span class="string">"text/plain"</span>; %&gt;</span>
+<span class="vbscript">&lt;% <span class="built_in">Response</span>.AddHeader(<span class="string">"Content-Disposition"</span>, <span class="string">"attachment;filename=CustomerReport.txt"</span>); %&gt;</span>
+Customer <span class="vbscript">&lt;%= Customer.Id %&gt;</span> (<span class="vbscript">&lt;%= Customer.Name %&gt;</span>)
+Address: <span class="vbscript">&lt;%= Customer.Address %&gt;</span>
+Phone: <span class="vbscript">&lt;%= Customer.PhoneNumber %&gt;</span>
+
+Past orders:
+------------
+<span class="vbscript">&lt;% foreach (var order <span class="keyword">in</span> Customer.PastOrders) { %&gt;</span>
+  <span class="vbscript">&lt;%= order.Id %&gt;</span> (<span class="vbscript">&lt;%= order.Ref %&gt;</span>)
+  Placed on: <span class="vbscript">&lt;%= order.Placed %&gt;</span>
+  Total value: £<span class="vbscript">&lt;%= order.TotalValue %&gt;</span>
+<span class="vbscript">&lt;% } %&gt;</span>
+</code></pre>
+<p>Notice how this page uses the exact same codebehind class as the other report, so our validation and data access code is centralised for both.  Here’s how the text report looks:</p>
+<p><img src="/software/articles/rendering-text-with-asp-net/text.png" alt="Text output"></p>
+<p>It’s worth noting a few issues with this approach.  Any code you put in the page (.asmx) file within server tags won’t get compiled until runtime so there is potential for some bugs to slip in if you’re not doing anything to smoke-test pages before deployment.  Running the site through the ASP.NET precompiler as part of your build process is a great way to catch issues like this before your users do.</p>
+<p>Also it turned out to be tricky to get the whitespace in the report just right, and when it was, the markup wasn’t quite so clean, as we had to lose some of the indentation there.  Potentially you could intercept the response before it gets sent back to the client and do some post-processing to remove any whitespace except that which you explicitly add within a server tag.</p>
+<p>Although you’d quickly run into limitations if you pushed this too far, and it is a bit unusual to use ASP.NET like this, it’s comforting to know that anyone familiar with ASP.NET markup (i.e. everyone on the team) could immediately dive in and fix bugs or enhance this report without needing to get familiar with any other code.</p>
+
+          <div class="details">09 March 2010  by Jon Merrifield
+          </div></div>
+        <div id="disqus_thread"></div>
+      </article>
+      <script>
+        var disqus_shortname = 'yagricom';
+        var disqus_identifier = 'Rendering Text With ASP.NET';
+        var disqus_url = 'http://www.jmerrifield.com/software/articles/rendering-text-with-asp-net/';
+        
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <footer>
+      <ul class="nav">
+        <li class="icon"><a href="mailto:jon@jmerrifield.com">&#59398;</a></li>
+        <li class="icon"><a href="https://twitter.com/jon_merrifield">&#59396;</a></li>
+        <li class="icon"><a href="https://www.facebook.com/jmerrifield">&#59393;</a></li>
+        <li class="icon"><a href="http://www.linkedin.com/profile/view?id=9701957">&#59395;</a></li>
+        <li class="icon"><a href="https://github.com/jmerrifield">&#59392;</a></li>
+        <li class="icon"><a href="http://stackoverflow.com/users/74152/jon-m">&#59397;</a></li>
+        <li class="icon"><a href="https://google.com/+JonMerrifield">&#59394;</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

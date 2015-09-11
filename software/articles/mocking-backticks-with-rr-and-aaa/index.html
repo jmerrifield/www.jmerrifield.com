@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Mocking Backticks with RR and AAA - Jon Merrifield
+    </title>
+    <link rel="author" href="http://www.jmerrifield.com">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-12677574-4', 'jmerrifield.com');
+      ga('send', 'pageview');
+      
+    </script>
+  </head>
+  <body class="article">
+    <header id="header">
+      <ul class="nav">
+        <li>
+          <h1><a href="/">Jon Merrifield</a></h1>
+        </li>
+        <li><a href="/">About Me</a></li>
+        <li><a href="/software/" class="active">Software Blog</a></li>
+      </ul>
+    </header>
+    <div id="content">
+      <article>
+        <h1>Mocking Backticks with RR and AAA</h1>
+        <div class="content"><p>In my adventures through RubyLand, I’ve been using the excellent <a href="https://github.com/btakita/rr">RR</a> test double framework together with <a href="http://relishapp.com/rspec">RSpec</a>, for some really expressive tests.  The other day I was writing a test to prove that a class had invoked a shell command with the correct command-line.  I knew there would be some way of mocking the backtick operator in Ruby, but for once RR was working against me.  I found <a href="http://blog.astrails.com/2010/7/5/how-to-mock-backticks-operator-in-your-test-specs-using-rr">this post on the astrails blog</a> to be the key.</p>
+<p>It wasn’t quite enough for me though.  I like to test in an AAA style, and what I wanted was the following:</p>
+<pre><code class="lang-ruby">describe <span class="string">"My class"</span> <span class="keyword">do</span>
+  before <span class="keyword">do</span>
+    <span class="comment"># Set up stubs</span>
+    <span class="comment"># Invoke the action</span>
+  <span class="keyword">end</span>
+
+  it <span class="string">"should call some web service"</span> <span class="keyword">do</span>
+    <span class="comment"># Simple assertion</span>
+  <span class="keyword">end</span>
+
+  it <span class="string">"should invoke the shell command"</span> <span class="keyword">do</span>
+    <span class="comment"># How do I make this assertion?</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</code></pre>
+<p>Using the information I already knew, I could set up a mock which would automatically fail if the command wasn’t invoked, but I didn’t want that embedded in the <code>before</code> block.  If I changed it to a stub, which would accept any command, how could I verify it later on?</p>
+<p>Digging into the code of RR revealed that calling <code>my_object.should have_received.my_method()</code> simply uses <code>method_missing</code> on the <a href="https://github.com/btakita/rr/blob/master/lib/rr/adapters/rspec.rb">InvocationMatcher class</a>.  I could invoke that directly and make an assertion on the command that should have been run:</p>
+<pre><code class="lang-ruby">before <span class="keyword">do</span>
+  stub(<span class="variable">@target</span>).__double_definition_create_<span class="number">_</span>.call(<span class="symbol">:`</span>) { <span class="string">"some fake output"</span> }
+  <span class="variable">@target</span>.do_action
+<span class="keyword">end</span>
+
+it <span class="string">"should invoke the shell command"</span> <span class="keyword">do</span>
+  expected_command = <span class="string">"echo 'this is awesome'"</span>
+  <span class="variable">@target</span>.should have_received.method_missing(<span class="symbol">:`</span>, expected_command)
+<span class="keyword">end</span>
+</code></pre>
+
+          <div class="details">17 August 2011  by Jon Merrifield
+          </div></div>
+        <div id="disqus_thread"></div>
+      </article>
+      <script>
+        var disqus_shortname = 'yagricom';
+        var disqus_identifier = 'Mocking Backticks with RR and AAA';
+        var disqus_url = 'http://www.jmerrifield.com/software/articles/mocking-backticks-with-rr-and-aaa/';
+        
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <footer>
+      <ul class="nav">
+        <li class="icon"><a href="mailto:jon@jmerrifield.com">&#59398;</a></li>
+        <li class="icon"><a href="https://twitter.com/jon_merrifield">&#59396;</a></li>
+        <li class="icon"><a href="https://www.facebook.com/jmerrifield">&#59393;</a></li>
+        <li class="icon"><a href="http://www.linkedin.com/profile/view?id=9701957">&#59395;</a></li>
+        <li class="icon"><a href="https://github.com/jmerrifield">&#59392;</a></li>
+        <li class="icon"><a href="http://stackoverflow.com/users/74152/jon-m">&#59397;</a></li>
+        <li class="icon"><a href="https://google.com/+JonMerrifield">&#59394;</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

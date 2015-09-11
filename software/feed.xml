@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jon Merrifield</title>
+    <atom:link href="http://www.jmerrifield.com/feed.xml" rel="self" type="application/rss+xml"></atom:link>
+    <link>http://www.jmerrifield.com</link>
+    <description>Jon Merrifield</description>
+    <pubDate>articles[0].rfc822date</pubDate>
+    <generator>Wintersmith - https://github.com/jnordberg/wintersmith</generator>
+    <language>en</language>
+    <item>
+      <title>Lessons from Snowboard Teaching</title>
+      <link>http://www.jmerrifield.com/software/articles/lessons-from-snowboard-teaching/</link>
+      <pubDate>Fri, 18 Apr 2014 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/lessons-from-snowboard-teaching/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;Alongside my programming career, I’ve spent a few years training and working as a snowboard instructor. I’ve been consistently surprised by how much crossover there is between the two occupations, and how each one has improved my skills in the other. I wanted to share some thoughts on the similarities between snowboard teaching (or really, formal instruction of any kind) and the work we do every day as software developers.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;http://www.jmerrifield.com/software/articles/lessons-from-snowboard-teaching/pic.jpeg&quot; alt=&quot;Article photo&quot;&gt;
+  &lt;figcaption&gt;
+    Photo courtesy of James Streater
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;Teaching snowboarding is a process of communicating very technical concepts to people (ranging from total beginners to very advanced) in a digestible fashion, then analysing their performance, and providing just the right feedback to help them progress to a higher level of performance.&lt;/p&gt;
+&lt;p&gt;If ‘communicating technical concepts’ and ‘providing feedback’ sound like things you often do as a software developer, then great! I think so too!&lt;/p&gt;
+&lt;h2 id=&quot;the-teacher-and-learner-roles&quot;&gt;The teacher and learner roles&lt;/h2&gt;
+&lt;p&gt;Whether we realise it or not, as software developers we frequently drop into the role of either teacher or learner. Teaching is not necessarily &lt;em&gt;telling people what to do&lt;/em&gt;, often it’s more like &lt;em&gt;trying to sell someone on a concept - a way of doing something, or a reason why something is happening&lt;/em&gt;. Framed that way, it’s easy to spot situations as a developer where you’re in a teaching role - trying to sell someone on an idea you have, or a learning role - listening to someone’s ‘pitch’, voluntarily or otherwise, and either accepting it into your ‘way of doing things’ or not.&lt;/p&gt;
+&lt;h3 id=&quot;motivation&quot;&gt;Motivation&lt;/h3&gt;
+&lt;p&gt;The motivations in each of these roles tend to be similar as well.&lt;/p&gt;
+&lt;p&gt;As a teacher of snowboarding, what I want (beyond the obvious - keeping you safe, enjoying a days work, getting a good tip etc) is to make you a better and more efficient rider, and raise the level of our discussion, in the hope that the riding we do together in future is more interesting, enjoyable, and we have to put in less effort for it. As a ‘teacher’ of programming - maybe I’m trying to convince you that we should use an existing library rather than building our own solution - I’m hoping that the work we do together in future is more productive, enjoyable, and we have to put in less effort for it.&lt;/p&gt;
+&lt;p&gt;As a student of snowboarding, I’m motivated by the opportunity to ride at a higher level, and experience different types of riding, because I’m not content to always ride the same way on the same sort of terrain. It’s boring to ride well within my comfort level for too long. Experiencing many different types of riding makes me a better rider in general, and equips me with a wider range of techniques for dealing with any situation. Personally, this also perfectly explains what motivates me as a programmer.&lt;/p&gt;
+&lt;h3 id=&quot;what-does-it-mean-&quot;&gt;What does it mean?&lt;/h3&gt;
+&lt;p&gt;If we recognise, in our day-to-day interactions, the moments when we adopt the role of teacher or student, then we can take steps to make those interactions easier. Either situation can be initiated by you or someone else - you can choose to present an idea to a co-worker, or you might get asked directly how to do something, either of which makes you the teacher. You might ask someone for advice, or someone may approach you with a proposal, making you the student.&lt;/p&gt;
+&lt;p&gt;As a teacher, you should be aware that the burden of understanding is primarily on you. If you’ve ever worked as a teacher/trainer/instructor or otherwise been paid to teach a skill to someone, you will have come to realise that it’s &lt;strong&gt;your&lt;/strong&gt; job to find a way of communicating the skill that works for the learner. Some people are unwilling learners, and this will occur more frequently in the world of software since it’s more likely that the ‘teacher’ initiates the interaction. In this case, as a teacher, it’s  important to ‘sell’ your point well, as you try to make the learner receptive to the possibility of a better way of doing things. This occurs surprisingly often in snowboard teaching - despite wishing to improve their riding, snowboarders with a lot of experience are reluctant to let go of old habits even if they aren’t optimal.&lt;/p&gt;
+&lt;p&gt;As a learner, if you recognise that you are being taught something, then try to help the teacher out. This can be difficult if the ‘lesson’ is that you’ve done something that the teacher believes to be incorrect, and you believe otherwise. Nevertheless, your rebuttal will be better informed if you first understand exactly what is being communicated to you. How would you behave if you were paying your co-worker to teach you this lesson (however unlikely that is)? You’d likely ask for clarification on unclear points, explain &lt;em&gt;why&lt;/em&gt; you have difficulty understanding something, try the thing out immediately to get feedback on it, and repeat your understanding of it back to the teacher in your own terms. It’s easy to get defensive when someone makes you an unwilling learner, but it’s in everyone’s best interest to help people out in their quest to teach you something.&lt;/p&gt;
+&lt;h2 id=&quot;feedback&quot;&gt;Feedback&lt;/h2&gt;
+&lt;p&gt;An important part of the teaching process is the way in which we deliver feedback. This doesn’t mean ‘annual progress review’ style feedback, but rather how we evaluate performances on a day-to-day basis, and in software this particularly applies to code review.&lt;/p&gt;
+&lt;h3 id=&quot;types-of-feedback&quot;&gt;Types of feedback&lt;/h3&gt;
+&lt;p&gt;Feedback can be &lt;em&gt;intrinsic&lt;/em&gt; or &lt;em&gt;extrinsic&lt;/em&gt;, and extrinsic feedback can be &lt;em&gt;informative&lt;/em&gt;, &lt;em&gt;evaluative&lt;/em&gt; or &lt;em&gt;corrective&lt;/em&gt;. &lt;strong&gt;Intrinsic&lt;/strong&gt; feedback comes from within the performer. In snowboarding, examples of this would be listening to the sound your snowboard makes to determine if you’re carving a clean line through the snow or making a more skidded turn. The software equivalent of this might be ‘code smells’ - various telltale signs that help you recognise when a piece of code is in danger of becoming problematic.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Extrinsic&lt;/strong&gt; feedback comes from outside the performer, generally provided by a teacher or peer (in snowboarding this also covers watching yourself on video, but that has no analogue in software).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Informative&lt;/strong&gt; feedback tells the performer &lt;em&gt;what&lt;/em&gt; they did. In snowboarding the rider cannot see themselves ride so this is very useful (e.g. ‘your heelside turn had a larger radius than your toeside turn’ or ‘you got about 3 feet off the ground’). In software we can always see the code we’ve written but sometimes lose sight of the bigger picture (or the more detailed view), so it can be helpful to receive some purely informative feedback (‘this method is 30 lines long and has 5 levels of nesting’, ‘this will navigate to the next page even if validation fails’)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Evaluative&lt;/strong&gt; feedback is extrinsic, and is when we judge something against some criteria (e.g. established coding standards or implicitly agreed-upon ideas about good code), but without suggesting how to proceed. ‘That was great’ or ‘that was terrible’ are not particularly helpful examples of evaluative feedback. In snowboarding, you might hear ‘your range of movement was &lt;em&gt;not enough&lt;/em&gt; to prevent the board skipping out’. More useful software examples could be ‘I cannot quite tell what the foo variable gets initialised to - that part is unclear’ or ‘you really made this code more intention-revealing and easy for newcomers to understand’.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Corrective&lt;/strong&gt; feedback is when we suggest how something could be improved, ‘if you move your weight more towards the tail of the board, it will grip through the end of the turn instead of washing out’. This is crucial in software development. All too often we tend towards subjective evaluative feedback when we should be leaning towards objective evaluation and corrective feedback, especially for more junior developers, e.g. ‘this method would become more intention-revealing if you split the body of the loop out into another method’, ‘moving this calculation outside the loop would improve the performance of this often-used method’ or ‘changing the variable name and indentation as follows will bring this code in line with our style guide’.&lt;/p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;When giving feedback to a co-worker, in the form of a code review, performance review, or simply responding to an idea they presented, try and spot which type of feedback you’re giving. Ask yourself whether it’s the most helpful type of feedback you &lt;em&gt;could&lt;/em&gt; be giving them. Perhaps your &lt;strong&gt;evaluative&lt;/strong&gt; feedback is not strongly rooted in objective criteria and you could refer to documented best practices. Maybe &lt;strong&gt;corrective&lt;/strong&gt; feedback would be far more helpful, or maybe you’d actually help more with some &lt;strong&gt;informative&lt;/strong&gt; feedback to lead the person towards spotting their own mistake.&lt;/p&gt;
+&lt;p&gt;Try and recognise the times when you’re being taught, and the times when you’re teaching. If you accept the earlier premise that teaching is largely about ‘convincing’ people, then you might be surprised how much teaching (attempted teaching, at least) really takes place at the office. Look for opportunities to be an effective teacher, and a willing learner, to make these interactions smoother.&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Node.js Antipatterns: Module Cache as Global State</title>
+      <link>http://www.jmerrifield.com/software/articles/nodejs-antipatterns-module-cache-as-global-state/</link>
+      <pubDate>Mon, 07 Apr 2014 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/nodejs-antipatterns-module-cache-as-global-state/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;I want to share something I’ve been considering an anti-pattern, involving Node’s module cache. Specifically, initializing a module in one part of the program, knowing that subsequent &lt;code&gt;require&lt;/code&gt; calls will return the already-initialized module.&lt;/p&gt;
+&lt;p&gt;Node caches modules internally, which makes this sort of thing possible:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// index.js (entry point of app)&lt;/span&gt;
+
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; redisConnection = &lt;span class=&quot;comment&quot;&gt;/* Redis initialization */&lt;/span&gt;
+
+&lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'./session-store'&lt;/span&gt;).init({
+  connection: redisConnection
+})
+
+&lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'./some-other-module'&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// some-other-module.js&lt;/span&gt;
+
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; sessions = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'./session-store'&lt;/span&gt;)
+
+&lt;span class=&quot;comment&quot;&gt;// sessions is already configured thanks to the .init call in index.js&lt;/span&gt;
+sessions.get(sessionId, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(err, data)&lt;/span&gt; {&lt;/span&gt;
+  console.log(&lt;span class=&quot;string&quot;&gt;'Session data:'&lt;/span&gt;, data)
+})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In &lt;code&gt;some-other-module&lt;/code&gt; we are assured that &lt;code&gt;sessions&lt;/code&gt; is the same instance of &lt;code&gt;./session-store&lt;/code&gt; that we initialized in &lt;code&gt;index.js&lt;/code&gt;. This gives us an opportunity to pre-configure a module in your program’s entry point, and other parts of the program can easily grab a configured instance of that module.&lt;/p&gt;
+&lt;p&gt;Don’t be fooled, this is not a good idea!&lt;/p&gt;
+&lt;p&gt;Firstly, Node &lt;a href=&quot;http://nodejs.org/api/modules.html#modules_module_caching_caveats&quot;&gt;does not guarantee this behavior&lt;/a&gt; in all situations. Personally I’ve never seen two &lt;code&gt;require&lt;/code&gt; calls return different instances of a module, but that’s most likely down to my usage patterns. In particular, on my current project we’re supplying a custom &lt;code&gt;NODE_PATH&lt;/code&gt; so that all &lt;code&gt;require&lt;/code&gt; paths are relative to the project root.&lt;/p&gt;
+&lt;p&gt;More significantly, &lt;strong&gt;this is just global state&lt;/strong&gt;. All the well-worn advice about the evils of global variables applies here. Any part of the system can change this state. Relying on one part of the system to set global state &lt;em&gt;before&lt;/em&gt; another part of the system tries to use it, makes the system very hard to reason about and debug, and tends to make code reuse a lot harder. If you suddenly need a second instance of that module (e.g. a secondary session store talking to a different database) then a large amount of re-work would be needed.&lt;/p&gt;
+&lt;p&gt;It’s not always ‘bad’ to do this. It’s reasonable to memoize expensive lookups inside a module, and in that case you can encapsulate the cache data and make the lookup transparent, so that the consumer neither needs to know, nor can it interfere with, the sequence of operations.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; cachedData
+
+module.exports.getData = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(callback)&lt;/span&gt; {&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (cachedData) {
+    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; process.nextTick(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; {&lt;/span&gt; callback(cachedData) })
+  }
+
+  &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'expensiveDataSource'&lt;/span&gt;).fetchData(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(data)&lt;/span&gt; {&lt;/span&gt;
+    cachedData = data; callback(data)
+  })
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Generally though, if a module is stateful, it’s better to have it return a new instance of an object (or function) that contains the state and provides the interface to manipulate it. Make it the responsibility of the consumer to keep track of configured instances. It’s also helpful to provide a narrow interface that makes it difficult to inadvertently try and use an invalid instance.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; config
+
+module.exports.init = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(c)&lt;/span&gt; {&lt;/span&gt;
+  config = c
+}
+
+module.exports.doStuff = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; {&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; doThingsWith(config)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Becomes:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-javascript&quot;&gt;module.exports.init = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(config)&lt;/span&gt; {&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (!configOk(config)) {
+    &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Error&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;'this config will result in a broken instance!'&lt;/span&gt;)
+  }
+
+  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; {
+    doStuff: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; {&lt;/span&gt;
+      &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; doThingsWith(config)
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, we have a fairly strong guarantee that nobody will be able to call &lt;code&gt;doStuff&lt;/code&gt; without having first configured the module with valid settings (in the first example, this would have been easy to do inadvertently). In addition, we’re free to use multiple instances of this module with different configurations if that becomes useful.&lt;/p&gt;
+&lt;p&gt;Sadly this makes it more difficult for ‘far-away’ parts of the program to make use of pre-configured modules. Passing them around through a long dependency chain can get very verbose and hard to keep track of. IoC containers are very popular in the Java and .NET world for dealing with this, but they are not so common in the Node community (&lt;a href=&quot;https://github.com/cujojs/wire&quot;&gt;wire&lt;/a&gt; seems to be the main contender at the time of writing). Whether you investigate an IoC tool, or find some other acceptable way of passing around configured module instances, it’s worth the effort to remove this avenue of complexity.&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Promises and Error Handling</title>
+      <link>http://www.jmerrifield.com/software/articles/promises-and-error-handling/</link>
+      <pubDate>Tue, 10 Dec 2013 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/promises-and-error-handling/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;I wrote a post for the &lt;a href=&quot;http://making.change.org/&quot;&gt;Making Change.org&lt;/a&gt; blog (&lt;a href=&quot;http://www.change.org/&quot;&gt;Change.org&lt;/a&gt;‘s product and development blog) about the lessons we’ve learned about promises and error handling. Check it out:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://making.change.org/post/69613524472/promises-and-error-handling&quot;&gt;Promises and Error Handling&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Mocking Backticks with RR and AAA</title>
+      <link>http://www.jmerrifield.com/software/articles/mocking-backticks-with-rr-and-aaa/</link>
+      <pubDate>Wed, 17  Aug 2011 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/mocking-backticks-with-rr-and-aaa/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;In my adventures through RubyLand, I’ve been using the excellent &lt;a href=&quot;https://github.com/btakita/rr&quot;&gt;RR&lt;/a&gt; test double framework together with &lt;a href=&quot;http://relishapp.com/rspec&quot;&gt;RSpec&lt;/a&gt;, for some really expressive tests.  The other day I was writing a test to prove that a class had invoked a shell command with the correct command-line.  I knew there would be some way of mocking the backtick operator in Ruby, but for once RR was working against me.  I found &lt;a href=&quot;http://blog.astrails.com/2010/7/5/how-to-mock-backticks-operator-in-your-test-specs-using-rr&quot;&gt;this post on the astrails blog&lt;/a&gt; to be the key.&lt;/p&gt;
+&lt;p&gt;It wasn’t quite enough for me though.  I like to test in an AAA style, and what I wanted was the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-ruby&quot;&gt;describe &lt;span class=&quot;string&quot;&gt;&quot;My class&quot;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+  before &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;comment&quot;&gt;# Set up stubs&lt;/span&gt;
+    &lt;span class=&quot;comment&quot;&gt;# Invoke the action&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+
+  it &lt;span class=&quot;string&quot;&gt;&quot;should call some web service&quot;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;comment&quot;&gt;# Simple assertion&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+
+  it &lt;span class=&quot;string&quot;&gt;&quot;should invoke the shell command&quot;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+    &lt;span class=&quot;comment&quot;&gt;# How do I make this assertion?&lt;/span&gt;
+  &lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the information I already knew, I could set up a mock which would automatically fail if the command wasn’t invoked, but I didn’t want that embedded in the &lt;code&gt;before&lt;/code&gt; block.  If I changed it to a stub, which would accept any command, how could I verify it later on?&lt;/p&gt;
+&lt;p&gt;Digging into the code of RR revealed that calling &lt;code&gt;my_object.should have_received.my_method()&lt;/code&gt; simply uses &lt;code&gt;method_missing&lt;/code&gt; on the &lt;a href=&quot;https://github.com/btakita/rr/blob/master/lib/rr/adapters/rspec.rb&quot;&gt;InvocationMatcher class&lt;/a&gt;.  I could invoke that directly and make an assertion on the command that should have been run:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-ruby&quot;&gt;before &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+  stub(&lt;span class=&quot;variable&quot;&gt;@target&lt;/span&gt;).__double_definition_create_&lt;span class=&quot;number&quot;&gt;_&lt;/span&gt;.call(&lt;span class=&quot;symbol&quot;&gt;:`&lt;/span&gt;) { &lt;span class=&quot;string&quot;&gt;&quot;some fake output&quot;&lt;/span&gt; }
+  &lt;span class=&quot;variable&quot;&gt;@target&lt;/span&gt;.do_action
+&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+
+it &lt;span class=&quot;string&quot;&gt;&quot;should invoke the shell command&quot;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;
+  expected_command = &lt;span class=&quot;string&quot;&gt;&quot;echo 'this is awesome'&quot;&lt;/span&gt;
+  &lt;span class=&quot;variable&quot;&gt;@target&lt;/span&gt;.should have_received.method_missing(&lt;span class=&quot;symbol&quot;&gt;:`&lt;/span&gt;, expected_command)
+&lt;span class=&quot;keyword&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    <item>
+      <title>Rendering Text With ASP.NET</title>
+      <link>http://www.jmerrifield.com/software/articles/rendering-text-with-asp-net/</link>
+      <pubDate>Tue, 09 Mar 2010 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/rendering-text-with-asp-net/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;We had a user story at work recently which required a simple summary report page to be created, for viewing inside a JavaScript popup, and also to be downloadable as a text file.  We decided to create a new ASPX page, not using the normal master page so there was no visual chrome, just the report itself.  It was easy to create a popup containing an iframe to display the report itself, and this kept the report logic from cluttering up the main page.&lt;/p&gt;
+&lt;p&gt;As the report page was read-only, and quite simple, I opted not to use server controls, in line with my growing dislike of the whole &lt;a href=&quot;http://codebetter.com/blogs/rob.conery/archive/2009/04/22/i-spose-i-ll-just-say-it-you-should-learn-mvc.aspx&quot;&gt;abstraction wrapped in deception covered in lie sauce&lt;/a&gt; issue around webforms.  I wrote a simple code behind class to grab the input parameter from the query string, pull the relevant data from the repositories, and expose the data using a protected property on the page.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; CustomerSummaryPage : Page
+{
+  &lt;span class=&quot;keyword&quot;&gt;protected&lt;/span&gt; Customer Customer { &lt;span class=&quot;keyword&quot;&gt;get&lt;/span&gt;; &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;set&lt;/span&gt;; }
+
+  &lt;span class=&quot;keyword&quot;&gt;protected&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;OnLoad&lt;/span&gt;(EventArgs e)
+  {
+    &lt;span class=&quot;comment&quot;&gt;// Don't need viewstate as we have no server controls&lt;/span&gt;
+    &lt;span class=&quot;comment&quot;&gt;// and aren't even submitting any data back&lt;/span&gt;
+    EnableViewState = &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;;
+
+    &lt;span class=&quot;comment&quot;&gt;// In production, more robust input parsing required!&lt;/span&gt;
+    &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; customerId = &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt;.Parse(Request.QueryString[&lt;span class=&quot;string&quot;&gt;&quot;customerId&quot;&lt;/span&gt;]);
+
+    &lt;span class=&quot;comment&quot;&gt;// Expose the data to the view&lt;/span&gt;
+    Customer = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Repository().GetCustomerById(customerId);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then the .aspx file uses clean markup with embedded server tags to render a simple summary report:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%@ Page Language=&lt;span class=&quot;string&quot;&gt;&quot;C#&quot;&lt;/span&gt; Inherits=&lt;span class=&quot;string&quot;&gt;&quot;AspNetText.CustomerSummaryPage&quot;&lt;/span&gt; %&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;html&lt;/span&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;head&lt;/span&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;title&lt;/span&gt;&amp;gt;&lt;/span&gt;Customer Summary&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;title&lt;/span&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;head&lt;/span&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;body&lt;/span&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;Customer &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.Id %&amp;gt;&lt;/span&gt; (&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.Name %&amp;gt;&lt;/span&gt;)&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;h1&lt;/span&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;Address: &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.Address %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;Phone: &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.PhoneNumber %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;
+
+  &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;h2&lt;/span&gt;&amp;gt;&lt;/span&gt;Past orders&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;h2&lt;/span&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;% foreach (var order &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Customer.PastOrders) { %&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;h3&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.Id %&amp;gt;&lt;/span&gt; (&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.Ref %&amp;gt;&lt;/span&gt;)&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;h3&lt;/span&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;Placed on: &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.Placed %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;Total value: £&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.TotalValue %&amp;gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;% } %&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;body&lt;/span&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;html&lt;/span&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice how clean this looks compared to a normal ASP.NET page covered in server controls, it’s more like an MVC view.  When we load this page up and check the source, the goodness continues:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/rendering-text-with-asp-net/markup.png&quot; alt=&quot;Markup&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The page itself is unremarkable, but easily styled and displayed within a popup iframe somewhere:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/rendering-text-with-asp-net/html.png&quot; alt=&quot;Rendered page&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The interesting bit starts when we look at fulfilling the text-file export part of the requirement.  There are many different ways we can build up a text string, maybe override the ToString() method of each class to build up a nice description, or use the visitor pattern to populate a StringBuilder, among other ideas.  As much as I like the visitor pattern, it’s not entirely obvious to the uninitiated, and as we’re creating text for human consumption it would be nice not to have all our formatting bits and pieces buried in code.&lt;/p&gt;
+&lt;p&gt;If you think about it, ASP.NET is really just a fancy text templating system, taking our .aspx files, and at runtime replacing our server tags with real values, although this aspect is hard to appreciate when you’re looking at a page loaded with DataGrids and hidden ViewState fields…  The point being that we’re not tied to rendering HTML, we can use this power to render whatever we want, and with a few hints to the browser as to what we’re sending it, we can get a real quick-and-easy text report for our users:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-xml&quot;&gt;&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%@ Page Language=&lt;span class=&quot;string&quot;&gt;&quot;C#&quot;&lt;/span&gt; Inherits=&lt;span class=&quot;string&quot;&gt;&quot;AspNetText.CustomerSummaryPage&quot;&lt;/span&gt; %&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;% &lt;span class=&quot;built_in&quot;&gt;Response&lt;/span&gt;.ContentType = &lt;span class=&quot;string&quot;&gt;&quot;text/plain&quot;&lt;/span&gt;; %&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;% &lt;span class=&quot;built_in&quot;&gt;Response&lt;/span&gt;.AddHeader(&lt;span class=&quot;string&quot;&gt;&quot;Content-Disposition&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;attachment;filename=CustomerReport.txt&quot;&lt;/span&gt;); %&amp;gt;&lt;/span&gt;
+Customer &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.Id %&amp;gt;&lt;/span&gt; (&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.Name %&amp;gt;&lt;/span&gt;)
+Address: &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.Address %&amp;gt;&lt;/span&gt;
+Phone: &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= Customer.PhoneNumber %&amp;gt;&lt;/span&gt;
+
+Past orders:
+------------
+&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;% foreach (var order &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; Customer.PastOrders) { %&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.Id %&amp;gt;&lt;/span&gt; (&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.Ref %&amp;gt;&lt;/span&gt;)
+  Placed on: &lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.Placed %&amp;gt;&lt;/span&gt;
+  Total value: £&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;%= order.TotalValue %&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;vbscript&quot;&gt;&amp;lt;% } %&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice how this page uses the exact same codebehind class as the other report, so our validation and data access code is centralised for both.  Here’s how the text report looks:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/rendering-text-with-asp-net/text.png&quot; alt=&quot;Text output&quot;&gt;&lt;/p&gt;
+&lt;p&gt;It’s worth noting a few issues with this approach.  Any code you put in the page (.asmx) file within server tags won’t get compiled until runtime so there is potential for some bugs to slip in if you’re not doing anything to smoke-test pages before deployment.  Running the site through the ASP.NET precompiler as part of your build process is a great way to catch issues like this before your users do.&lt;/p&gt;
+&lt;p&gt;Also it turned out to be tricky to get the whitespace in the report just right, and when it was, the markup wasn’t quite so clean, as we had to lose some of the indentation there.  Potentially you could intercept the response before it gets sent back to the client and do some post-processing to remove any whitespace except that which you explicitly add within a server tag.&lt;/p&gt;
+&lt;p&gt;Although you’d quickly run into limitations if you pushed this too far, and it is a bit unusual to use ASP.NET like this, it’s comforting to know that anyone familiar with ASP.NET markup (i.e. everyone on the team) could immediately dive in and fix bugs or enhance this report without needing to get familiar with any other code.&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Readable String Concatenation</title>
+      <link>http://www.jmerrifield.com/software/articles/readable-string-concatenation/</link>
+      <pubDate>Wed, 17 Feb 2010 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/readable-string-concatenation/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;When interviewing for .NET jobs, invariably something comes up along the lines of: “If you had to join a number of strings together, how would you do it?”.  Sadly, the desired answer is usually a combination of &lt;a href=&quot;http://www.codinghorror.com/blog/2009/01/the-sad-tragedy-of-micro-optimization-theater.html&quot;&gt;micro-optimisation&lt;/a&gt;, and poor awareness of the &lt;a href=&quot;http://www.codeproject.com/KB/cs/StringBuilder_vs_String.aspx&quot;&gt;relative performance&lt;/a&gt; of various string concatenation methods - a textbook &lt;a href=&quot;http://msdn.microsoft.com/en-us/library/system.text.stringbuilder(v=vs.80).aspx&quot;&gt;StringBuilder&lt;/a&gt; implementation.&lt;/p&gt;
+&lt;p&gt;Regardless of which method you use, you can’t escape the fact that most string concatenation code is ugly as hell, let’s look at a few ways you could create a comma separated list of customers names, each one surrounded with quotes:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Set up our test data&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; separator = &lt;span class=&quot;string&quot;&gt;&quot;, &quot;&lt;/span&gt;;
+&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; quote = &lt;span class=&quot;string&quot;&gt;&quot;'&quot;&lt;/span&gt;;
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; customers = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;[] { &lt;span class=&quot;string&quot;&gt;&quot;Chuck Norris&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Bruce Lee&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Bear Grylls&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Ray Mears&quot;&lt;/span&gt; }
+  .Select(x =&amp;gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Customer { Name = x });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Standard string concatenation&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; result = &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt;.Empty;
+&lt;span class=&quot;keyword&quot;&gt;foreach&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; customer &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; customers)
+{
+  result += quote + customer.Name + quote;
+  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (customer != customers.Last())
+  {
+    result += separator;
+  }
+}
+
+&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Textbook StringBuilder usage&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; builder = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; StringBuilder();
+&lt;span class=&quot;keyword&quot;&gt;foreach&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; customer &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; customers)
+{
+  builder.Append(quote);
+  builder.Append(customer.Name);
+  builder.Append(quote);
+  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (customer != customers.Last())
+  {
+    builder.Append(separator);
+  }
+}
+
+&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; builder.ToString();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// It gets a little better with string.join&lt;/span&gt;
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; names = customers.Select(x =&amp;gt; quote + x.Name + quote);
+&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; nameArray = names.ToArray();
+
+&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt;.Join(separator, nameArray);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It’s surprising how this fairly simple task turns into such a lot of code, none of it particularly intention-revealing.  The most unfriendly one appears to be the StringBuilder implementation.  As a side note, I expect most people wouldn’t bother defining constants for ‘quote’ and ‘separator’, since they’re unlikely to change, and only one character long anyway, but in this case having an obvious and explicit name for each one makes it clearer at a first glance to see the intention behind the code (see &lt;a href=&quot;http://c2.com/cgi/wiki?ScreechinglyObviousCode&quot;&gt;ScreechinglyObviousCode&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;With a few very simple extension methods, which look like they would come in handy all over, we can reduce this task to the amount of code that it seems like it should take - a screamingly obvious one-liner.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ConcatStrings&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt; IEnumerable&amp;lt;&lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt;&amp;gt; source, &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; separator)
+{
+  &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (source == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArgumentNullException(&lt;span class=&quot;string&quot;&gt;&quot;source&quot;&lt;/span&gt;);
+  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt;.Join(separator, source.ToArray());
+}
+
+&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Wrap&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; source, &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt; wrapper)
+{
+  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; wrapper + source + wrapper;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can use this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; customers.Select(x =&amp;gt; x.Name.Wrap(quote)).ConcatStrings(separator);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It’s always worth adding a few simple utility methods to help make your core business logic code more readable and intention-revealing.  With extension methods our utility functions can be easily discoverable and obviously named (no more big-bag-o-crap static utility classes with hundreds of badly-named, unrelated functions!)&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Visualising Complex Structures With GraphViz</title>
+      <link>http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/</link>
+      <pubDate>Mon, 01 Feb 2010 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;Whenever I’m trying to solve a particularly complex problem, I immediately reach for a sheet of paper and start making drawings to help wrap my head around it.  I often find myself tits-deep in piles of shabby diagrams scribbled on the back of envelopes and napkins.  I’d bet that most developers are the same.  But what do you do when faced with something big or complex enough that you can’t even manage to get it onto paper?  Rewrite your software so it’s not quite so ridiculously complicated?  In a perfect world, maybe, but another option is to bring out the heavy tools and write some code to do the visualising for you.  In this post I’ll look at how we can use a powerful free graphing library to easily produce diagrams of complex data structures.&lt;/p&gt;
+&lt;p&gt;The examples here are contrived, but directly inspired by a real-world problem I spent many hours trying to debug.  The last project I worked on had a decision system which allowed administrators to define complex criteria which could be used to filter applicants (this was a job recruitment system).  Each decision was stored as a tree of predicates, something like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Root
++---And
+    +---Or
+    |   +---Condition1
+    |   +---Condition2
+    +---Condition3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We also used soft-deletes (mostly so we didn’t have to make the UI smart enough to handle tree deletion), all the non-leaf predicate types knew to ignore a child with the ‘deleted’ bit set (i.e. an ‘And’ predicate will always treat a deleted child as true, an ‘Or’ predicate will treat it as false).  Certain types of predicate store references to dynamically-specified fields on the applicant, so that actual vs. expected values can be compared.&lt;/p&gt;
+&lt;p&gt;The UI did a great job of presenting a simple view to the user, it flattened the tree into groups of required conditions, and grouped those into optional sets, while hiding anything that had been deleted.  Unfortunately that made it difficult to get an idea of what the tree really looked like.  The database table for a simple decision looked something like this:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/table.png&quot;&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/table-small.png&quot; alt=&quot;Decision table&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;What you’re seeing is guid identifiers, single-table inheritance, and self-referential foreign keys.  How much fun would you have walking through that decision tree by following the child id’s and checking deleted flags?  Now consider that this decision is &lt;em&gt;tiny&lt;/em&gt;, and it’s the &lt;em&gt;only one&lt;/em&gt; in that table, and you might start to see why I went to the trouble of writing a tool to help me when one of our users reported that a particularly complex decision was filtering applicants incorrectly.&lt;/p&gt;
+&lt;p&gt;Drawing out a tree by hand at this scale is slow, error-prone, and just soul destroying.  Enter &lt;a href=&quot;http://www.graphviz.org/&quot;&gt;GraphViz&lt;/a&gt;, a library of tools for creating complex graphs from simple text markup.  Of particular interest is dot, a command line tool that takes input such as this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;digraph G {
+    And -&amp;gt; Or;
+    Or -&amp;gt; Condition1;
+    Or -&amp;gt; Condition2;
+    And -&amp;gt; Condition3;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;And turns it into a directed graph like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/sample-digraph.png&quot; alt=&quot;Sample dot output&quot;&gt;&lt;/p&gt;
+&lt;p&gt;You can see it would be fairly trivial to hack together a program to generate dot markup representing our decision tree, and have dot render it into something that we can actually comprehend.&lt;/p&gt;
+&lt;p&gt;We’ll start by setting up some LINQ to SQL classes:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/classes.png&quot;&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/classes-small.png&quot; alt=&quot;LINQ-to-SQL classes&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;When I wrote this for real I went for the quick-and-dirty method and churned out a horrendous piece of code full of massive switch statements and other awful things that I’m ashamed to admit.  Thankfully that solution was accidentally deleted and will never see the light of day.  For this post I decided to make things a bit nicer, so I’m using the &lt;a href=&quot;http://en.wikipedia.org/wiki/Visitor_pattern&quot;&gt;Visitor pattern&lt;/a&gt;, it’s overkill for a simple tool but this is a good example of how it helps you use the power of polymorphism without bloating your classes with extra methods that would make them less cohesive.&lt;/p&gt;
+&lt;p&gt;In my case, the actual predicate classes already used the Visitor pattern so in theory I could simply have referenced the core assembly and passed in a new Visitor implementation, making things even easier.  In practice there was something of a dependency nightmare so it wasn’t an option.  Here’s the interface and some of the code I had to add to the domain classes:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; IPredicateVisitor
+{
+  &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; Visit(RootPredicate predicate);
+  &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; Visit(AndPredicate predicate);
+  &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; Visit(OrPredicate predicate);
+  &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; Visit(ComparePredicate predicate);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;partial&lt;/span&gt; class Predicate
+{
+  &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Accept&lt;/span&gt;(IPredicateVisitor visitor);
+}
+
+&lt;span class=&quot;keyword&quot;&gt;partial&lt;/span&gt; class RootPredicate
+{
+  &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Accept&lt;/span&gt;(IPredicateVisitor visitor)
+  {
+    visitor.Visit(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;);
+  }
+}
+
+&lt;span class=&quot;comment&quot;&gt;// Repeated for each non-abstract subclass&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I won’t include the whole visitor implementation here (all the code is attached at the end of the post) but here is one method to illustrate the idea:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Visit&lt;/span&gt;(AndPredicate predicate)
+{
+  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; thisId = ids.GetIdFor(predicate);
+  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; leftId = ids.GetIdFor(predicate.LeftChild);
+  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; rightId = ids.GetIdFor(predicate.RightChild);
+  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; extraStyling = predicate.IsDeleted ? &lt;span class=&quot;string&quot;&gt;&quot;,color=gray&quot;&lt;/span&gt; : &lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt;.Empty;
+
+  writer.WriteLine(&lt;span class=&quot;string&quot;&gt;&quot;{0} [label=\&quot;And\&quot;{1}];&quot;&lt;/span&gt;, thisId, extraStyling);
+  writer.WriteLine(&lt;span class=&quot;string&quot;&gt;&quot;{0} -&amp;gt; {1};&quot;&lt;/span&gt;, thisId, leftId);
+  writer.WriteLine(&lt;span class=&quot;string&quot;&gt;&quot;{0} -&amp;gt; {1};&quot;&lt;/span&gt;, thisId, rightId);
+
+  predicate.LeftChild.Accept(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;);
+  predicate.RightChild.Accept(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This writes 3 output lines.  The first sets the label and any styling for the graph node.  The next two link it to it’s left and right child.  Then we recurse into the left and then the right child.  I’m using an id converter class, which just contains a dictionary, to map the guid identifiers into something that GraphViz will accept (it chokes on guids, even with the hyphens removed).&lt;/p&gt;
+&lt;p&gt;To invoke our visitor, we wrap it in a very simple program:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; Main(&lt;span class=&quot;keyword&quot;&gt;string&lt;/span&gt;[] args)
+{
+  Console.Error.WriteLine(&lt;span class=&quot;string&quot;&gt;&quot;Getting tree for predicate root id '{0}'&quot;&lt;/span&gt;, args[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]);
+  Console.Error.WriteLine(&lt;span class=&quot;string&quot;&gt;&quot;Using connection string '{0}'&quot;&lt;/span&gt;, args[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]);
+
+  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; rootId = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Guid(args[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;]);
+
+  &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; context = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DataDataContext(args[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;]))
+  {
+    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; root = context.Predicates.Single(x =&amp;gt; x.Id == rootId);
+
+    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; writer = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; IndentedTextWriter(Console.Out);
+
+    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; visitor = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DotGraphPredicateVisitor(writer);
+    root.Accept(visitor);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The IndentedTextWriter is pure gold-plating by the way - dot markup ignores whitespace, but it makes it easier to verify the output if we need to.  We’re going to be piping the output from this program directly into dot, so we can’t write status or diagnostic messages directly to stdout (Console.Out).  We can print these to stderr (Console.Error) which will show up on screen but won’t get redirected.&lt;/p&gt;
+&lt;p&gt;If we run the program directly, passing in the id of our root predicate and a connection string, we can see the dot markup that gets produced:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;TreeVisualiser.exe ^
+    489501F4-F170-48A6-9FE1-180165A37F1B ^
+    &amp;quot;Data Source=localhost\sql2008;Initial Catalog=GraphVizDebugging;Integrated Security=True&amp;quot;
+
+Getting tree for predicate root id &amp;#39;489501F4-F170-48A6-9FE1-180165A37F1B&amp;#39;
+Using connection string &amp;#39;Data Source=localhost\sql2008;Initial Catalog=GraphVizDebugging;Integrated Security=True&amp;#39;
+digraph G {
+    Root_1 [label=&amp;quot;Root&amp;quot;];
+    Root_1 -&amp;gt; And_2;
+    And_2 [label=&amp;quot;And&amp;quot;];
+    And_2 -&amp;gt; And_3;
+    And_2 -&amp;gt; Compare_4;
+    And_3 [label=&amp;quot;And&amp;quot;];
+    And_3 -&amp;gt; And_5;
+    And_3 -&amp;gt; Or_6;
+    And_5 [label=&amp;quot;And&amp;quot;,color=gray];
+    And_5 -&amp;gt; Compare_7;
+    And_5 -&amp;gt; Compare_8;
+    Compare_7 [label=&amp;quot;Date of Birth is more than 21 years ago&amp;quot;];
+    Compare_8 [label=&amp;quot;Date of Birth is less than 65 years ago&amp;quot;];
+    Or_6 [label=&amp;quot;Or&amp;quot;];
+    Or_6 -&amp;gt; Compare_9;
+    Or_6 -&amp;gt; Compare_10;
+    Compare_9 [label=&amp;quot;Location equals &amp;#39;Reading, UK&amp;#39;&amp;quot;];
+    Compare_10 [label=&amp;quot;Willing to Relocate is true&amp;quot;];
+    Compare_4 [label=&amp;quot;Years Experience is greater than 5&amp;quot;];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;That looks good, so we can change the command to pipe the output into dot, and redirect dot’s output to file:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;TreeVisualiser.exe ^
+    489501F4-F170-48A6-9FE1-180165A37F1B ^
+    &amp;quot;Data Source=localhost\sql2008;Initial Catalog=GraphVizDebugging;Integrated Security=True&amp;quot; ^
+    | dot -Tpng &amp;gt; out.png
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Now if we open up out.png:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/output.png&quot;&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/output-small.png&quot; alt=&quot;Final output&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Now that’s something I can print out a few copies of and attack with coloured markers, while I trace through exactly why the evaluation is failing.  The deleted nodes have a grey outline so we know they’re different, and it’s easy to add more conditional styling if we want to highlight certain things or differentiate between predicate types.&lt;/p&gt;
+&lt;p&gt;This might seem like a lot of work just to get a picture of what’s going on in a data structure, but I’m not kidding when I say that trying to draw the thing &lt;em&gt;just once&lt;/em&gt; took me longer than the entire time I spent writing the program.  And I got the drawing wrong.  And I re-used this several times as I tweaked the decision tree.  I say: it was worth it.&lt;/p&gt;
+&lt;p&gt;If you find yourself in a similar situation where you can’t figure out the internal state of something you’re debugging, consider hacking together something to help visualise it.  Tools like GraphViz make it simple to create detailed visuals, but even some well-formatted text output can be just as useful to help infer structure.  It takes less time than you might imagine, and can often save you hours of stress and hair-pulling.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.graphviz.org/Download..php&quot;&gt;GraphViz download page&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.graphviz.org/pdf/dotguide.pdf&quot;&gt;dot user guide&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/code.zip&quot;&gt;Example code from this post&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>LINQ to SQL Unspecified Error and missing designer file</title>
+      <link>http://www.jmerrifield.com/software/articles/linq-to-sql-unspecified-error-and-missing-designer-file/</link>
+      <pubDate>Fri, 29 Jan 2010 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/linq-to-sql-unspecified-error-and-missing-designer-file/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;I’ve been doing battle with the LINQ to SQL designer for a while now so I was surprised to be caught out by this, frankly, unbelievable issue.  Putting together some example code for my next post, I had a .dbml file with around 4 classes, and suddenly the designer began throwing up a very unhelpful ‘Unspecified Error’ every time I tried to make any changes.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/linq-to-sql-unspecified-error-and-missing-designer-file/error.png&quot; alt=&quot;Error message&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Eventually I realised that every time I saved the diagram, the .designer.cs file was being deleted!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/linq-to-sql-unspecified-error-and-missing-designer-file/missing-file.png&quot; alt=&quot;Missing file&quot;&gt;&lt;/p&gt;
+&lt;p&gt;A bit of googling turned up the solution &lt;a href=&quot;http://smehrozalam.wordpress.com/2009/10/05/linq-to-sql-visual-studio-designer-failed-to-autogenerate-designer-cs-data-classes/&quot;&gt;here&lt;/a&gt;, I had added some code to the auto-generated partial class file (Data.cs), and foolishly didn’t realise that any ‘using’ statements in that file have to go inside the namespace declaration!&lt;/p&gt;
+&lt;p&gt;Wrong:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;namespace GraphVizDebugging
+{
+  &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; System;
+
+  &lt;span class=&quot;keyword&quot;&gt;partial&lt;/span&gt; class Predicate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Right:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;lang-cs&quot;&gt;namespace GraphVizDebugging
+{
+  &lt;span class=&quot;keyword&quot;&gt;using&lt;/span&gt; System;
+
+  &lt;span class=&quot;keyword&quot;&gt;partial&lt;/span&gt; class Predicate
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    <item>
+      <title>Form Control Naming Conventions</title>
+      <link>http://www.jmerrifield.com/software/articles/form-control-naming-conventions/</link>
+      <pubDate>Wed, 27 Jan 2010 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/form-control-naming-conventions/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;For my first real post I thought I would expand on an answer I gave to a question on StackOverflow &lt;a href=&quot;http://stackoverflow.com/questions/642759/naming-convention-for-controls/642818#642818&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The question was asking about naming conventions for winforms and webforms controls.  My take on this is that there’s no need to embed too much type information in the control’s name, e.g. &lt;code&gt;txtCustomerName&lt;/code&gt;, &lt;code&gt;comboOrderStatus&lt;/code&gt; (hungarian notation isn’t generally used for variable names any more, so why use it for control names?).  It is, however, useful to distinguish controls from variables that might be holding the same information, you don’t want ambiguity between &lt;code&gt;customerName&lt;/code&gt; (the textbox) and &lt;code&gt;customerName&lt;/code&gt; (the string variable).&lt;/p&gt;
+&lt;p&gt;I tend to name my form controls with a description of the information they contain (or function they perform, in the case of buttons) with a very broad control type descriptor appended to it.  Some examples:
+&lt;code&gt;customerNameInput&lt;/code&gt; (textbox)
+&lt;code&gt;savebutton&lt;/code&gt;, &lt;code&gt;cancelButton&lt;/code&gt; (button, link button, image button etc)
+&lt;code&gt;orderStatusSelector&lt;/code&gt; (combo box, radio button list, etc)&lt;/p&gt;
+&lt;p&gt;The advantages to this are twofold.  First, I can change the exact type of a control without affecting it’s name.  Why should my form code care whether Order Status is selected with a combo box or a radio button list?  Or whether the Save button is a link button or a regular button?&lt;/p&gt;
+&lt;p&gt;The second, less obvious, advantage is having predictable control names.  When you’ve spent as much time as I have maintaining hellish 10,000 line &lt;code&gt;MainForm.cs&lt;/code&gt; classes with so many controls that you can’t even load the designer, you really appreciate being able to guess the name of the Order Status dropdown without having to try various permutations of &lt;code&gt;drop&lt;/code&gt;, &lt;code&gt;ddl&lt;/code&gt;, &lt;code&gt;combo&lt;/code&gt;, &lt;code&gt;list&lt;/code&gt; prefixes.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.jmerrifield.com/software/articles/form-control-naming-conventions/pic.png&quot; alt=&quot;Conventions in use&quot;&gt;&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Jon Starts A Tech Blog</title>
+      <link>http://www.jmerrifield.com/software/articles/jon-starts-a-tech-blog/</link>
+      <pubDate>Tue, 26 Jan 2010 12:00:00 +0000</pubDate>
+      <guid isPermaLink="true">http://www.jmerrifield.com/software/articles/jon-starts-a-tech-blog/</guid>
+      <author>Jon Merrifield</author>
+      <description>&lt;p&gt;Yes, I now have a blog, so I can write down some of my ramblings about programming and technology. In the unlikely event I write something you find useful, leave me a comment and let me know. Better yet, buy me a pint when you see me at the pub.&lt;/p&gt;
+</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Readable String Concatenation - Jon Merrifield
+    </title>
+    <link rel="author" href="http://www.jmerrifield.com">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-12677574-4', 'jmerrifield.com');
+      ga('send', 'pageview');
+      
+    </script>
+  </head>
+  <body class="article">
+    <header id="header">
+      <ul class="nav">
+        <li>
+          <h1><a href="/">Jon Merrifield</a></h1>
+        </li>
+        <li><a href="/">About Me</a></li>
+        <li><a href="/software/" class="active">Software Blog</a></li>
+      </ul>
+    </header>
+    <div id="content">
+      <article>
+        <h1>Readable String Concatenation</h1>
+        <div class="content"><p>When interviewing for .NET jobs, invariably something comes up along the lines of: “If you had to join a number of strings together, how would you do it?”.  Sadly, the desired answer is usually a combination of <a href="http://www.codinghorror.com/blog/2009/01/the-sad-tragedy-of-micro-optimization-theater.html">micro-optimisation</a>, and poor awareness of the <a href="http://www.codeproject.com/KB/cs/StringBuilder_vs_String.aspx">relative performance</a> of various string concatenation methods - a textbook <a href="http://msdn.microsoft.com/en-us/library/system.text.stringbuilder(v=vs.80).aspx">StringBuilder</a> implementation.</p>
+<p>Regardless of which method you use, you can’t escape the fact that most string concatenation code is ugly as hell, let’s look at a few ways you could create a comma separated list of customers names, each one surrounded with quotes:</p>
+<pre><code class="lang-cs"><span class="comment">// Set up our test data</span>
+<span class="keyword">const</span> <span class="keyword">string</span> separator = <span class="string">", "</span>;
+<span class="keyword">const</span> <span class="keyword">string</span> quote = <span class="string">"'"</span>;
+<span class="keyword">var</span> customers = <span class="keyword">new</span>[] { <span class="string">"Chuck Norris"</span>, <span class="string">"Bruce Lee"</span>, <span class="string">"Bear Grylls"</span>, <span class="string">"Ray Mears"</span> }
+  .Select(x =&gt; <span class="keyword">new</span> Customer { Name = x });
+</code></pre>
+<pre><code class="lang-cs"><span class="comment">// Standard string concatenation</span>
+<span class="keyword">string</span> result = <span class="keyword">string</span>.Empty;
+<span class="keyword">foreach</span> (<span class="keyword">var</span> customer <span class="keyword">in</span> customers)
+{
+  result += quote + customer.Name + quote;
+  <span class="keyword">if</span> (customer != customers.Last())
+  {
+    result += separator;
+  }
+}
+
+<span class="keyword">return</span> result;
+</code></pre>
+<pre><code class="lang-cs"><span class="comment">// Textbook StringBuilder usage</span>
+<span class="keyword">var</span> builder = <span class="keyword">new</span> StringBuilder();
+<span class="keyword">foreach</span> (<span class="keyword">var</span> customer <span class="keyword">in</span> customers)
+{
+  builder.Append(quote);
+  builder.Append(customer.Name);
+  builder.Append(quote);
+  <span class="keyword">if</span> (customer != customers.Last())
+  {
+    builder.Append(separator);
+  }
+}
+
+<span class="keyword">return</span> builder.ToString();
+</code></pre>
+<pre><code class="lang-cs"><span class="comment">// It gets a little better with string.join</span>
+<span class="keyword">var</span> names = customers.Select(x =&gt; quote + x.Name + quote);
+<span class="keyword">var</span> nameArray = names.ToArray();
+
+<span class="keyword">return</span> <span class="keyword">string</span>.Join(separator, nameArray);
+</code></pre>
+<p>It’s surprising how this fairly simple task turns into such a lot of code, none of it particularly intention-revealing.  The most unfriendly one appears to be the StringBuilder implementation.  As a side note, I expect most people wouldn’t bother defining constants for ‘quote’ and ‘separator’, since they’re unlikely to change, and only one character long anyway, but in this case having an obvious and explicit name for each one makes it clearer at a first glance to see the intention behind the code (see <a href="http://c2.com/cgi/wiki?ScreechinglyObviousCode">ScreechinglyObviousCode</a>).</p>
+<p>With a few very simple extension methods, which look like they would come in handy all over, we can reduce this task to the amount of code that it seems like it should take - a screamingly obvious one-liner.</p>
+<pre><code class="lang-cs"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">ConcatStrings</span>(<span class="keyword">this</span> IEnumerable&lt;<span class="keyword">string</span>&gt; source, <span class="keyword">string</span> separator)
+{
+  <span class="keyword">if</span> (source == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> ArgumentNullException(<span class="string">"source"</span>);
+  <span class="keyword">return</span> <span class="keyword">string</span>.Join(separator, source.ToArray());
+}
+
+<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">Wrap</span>(<span class="keyword">this</span> <span class="keyword">string</span> source, <span class="keyword">string</span> wrapper)
+{
+  <span class="keyword">return</span> wrapper + source + wrapper;
+}
+</code></pre>
+<p>Now we can use this:</p>
+<pre><code class="lang-cs"><span class="keyword">return</span> customers.Select(x =&gt; x.Name.Wrap(quote)).ConcatStrings(separator);
+</code></pre>
+<p>It’s always worth adding a few simple utility methods to help make your core business logic code more readable and intention-revealing.  With extension methods our utility functions can be easily discoverable and obviously named (no more big-bag-o-crap static utility classes with hundreds of badly-named, unrelated functions!)</p>
+
+          <div class="details">17 February 2010  by Jon Merrifield
+          </div></div>
+        <div id="disqus_thread"></div>
+      </article>
+      <script>
+        var disqus_shortname = 'yagricom';
+        var disqus_identifier = 'Readable String Concatenation';
+        var disqus_url = 'http://www.jmerrifield.com/software/articles/readable-string-concatenation/';
+        
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <footer>
+      <ul class="nav">
+        <li class="icon"><a href="mailto:jon@jmerrifield.com">&#59398;</a></li>
+        <li class="icon"><a href="https://twitter.com/jon_merrifield">&#59396;</a></li>
+        <li class="icon"><a href="https://www.facebook.com/jmerrifield">&#59393;</a></li>
+        <li class="icon"><a href="http://www.linkedin.com/profile/view?id=9701957">&#59395;</a></li>
+        <li class="icon"><a href="https://github.com/jmerrifield">&#59392;</a></li>
+        <li class="icon"><a href="http://stackoverflow.com/users/74152/jon-m">&#59397;</a></li>
+        <li class="icon"><a href="https://google.com/+JonMerrifield">&#59394;</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

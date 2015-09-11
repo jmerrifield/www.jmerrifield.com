@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Visualising Complex Structures With GraphViz - Jon Merrifield
+    </title>
+    <link rel="author" href="http://www.jmerrifield.com">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-12677574-4', 'jmerrifield.com');
+      ga('send', 'pageview');
+      
+    </script>
+  </head>
+  <body class="article">
+    <header id="header">
+      <ul class="nav">
+        <li>
+          <h1><a href="/">Jon Merrifield</a></h1>
+        </li>
+        <li><a href="/">About Me</a></li>
+        <li><a href="/software/" class="active">Software Blog</a></li>
+      </ul>
+    </header>
+    <div id="content">
+      <article>
+        <h1>Visualising Complex Structures With GraphViz</h1>
+        <div class="content"><p>Whenever I’m trying to solve a particularly complex problem, I immediately reach for a sheet of paper and start making drawings to help wrap my head around it.  I often find myself tits-deep in piles of shabby diagrams scribbled on the back of envelopes and napkins.  I’d bet that most developers are the same.  But what do you do when faced with something big or complex enough that you can’t even manage to get it onto paper?  Rewrite your software so it’s not quite so ridiculously complicated?  In a perfect world, maybe, but another option is to bring out the heavy tools and write some code to do the visualising for you.  In this post I’ll look at how we can use a powerful free graphing library to easily produce diagrams of complex data structures.</p>
+<p>The examples here are contrived, but directly inspired by a real-world problem I spent many hours trying to debug.  The last project I worked on had a decision system which allowed administrators to define complex criteria which could be used to filter applicants (this was a job recruitment system).  Each decision was stored as a tree of predicates, something like this:</p>
+<pre><code>Root
++---And
+    +---Or
+    |   +---Condition1
+    |   +---Condition2
+    +---Condition3
+</code></pre><p>We also used soft-deletes (mostly so we didn’t have to make the UI smart enough to handle tree deletion), all the non-leaf predicate types knew to ignore a child with the ‘deleted’ bit set (i.e. an ‘And’ predicate will always treat a deleted child as true, an ‘Or’ predicate will treat it as false).  Certain types of predicate store references to dynamically-specified fields on the applicant, so that actual vs. expected values can be compared.</p>
+<p>The UI did a great job of presenting a simple view to the user, it flattened the tree into groups of required conditions, and grouped those into optional sets, while hiding anything that had been deleted.  Unfortunately that made it difficult to get an idea of what the tree really looked like.  The database table for a simple decision looked something like this:</p>
+<p><a href="/software/articles/visualising-complex-structures-with-graphviz/table.png"><img src="/software/articles/visualising-complex-structures-with-graphviz/table-small.png" alt="Decision table"></a></p>
+<p>What you’re seeing is guid identifiers, single-table inheritance, and self-referential foreign keys.  How much fun would you have walking through that decision tree by following the child id’s and checking deleted flags?  Now consider that this decision is <em>tiny</em>, and it’s the <em>only one</em> in that table, and you might start to see why I went to the trouble of writing a tool to help me when one of our users reported that a particularly complex decision was filtering applicants incorrectly.</p>
+<p>Drawing out a tree by hand at this scale is slow, error-prone, and just soul destroying.  Enter <a href="http://www.graphviz.org/">GraphViz</a>, a library of tools for creating complex graphs from simple text markup.  Of particular interest is dot, a command line tool that takes input such as this:</p>
+<pre><code>digraph G {
+    And -&gt; Or;
+    Or -&gt; Condition1;
+    Or -&gt; Condition2;
+    And -&gt; Condition3;
+}
+</code></pre><p>And turns it into a directed graph like this:</p>
+<p><img src="/software/articles/visualising-complex-structures-with-graphviz/sample-digraph.png" alt="Sample dot output"></p>
+<p>You can see it would be fairly trivial to hack together a program to generate dot markup representing our decision tree, and have dot render it into something that we can actually comprehend.</p>
+<p>We’ll start by setting up some LINQ to SQL classes:</p>
+<p><a href="/software/articles/visualising-complex-structures-with-graphviz/classes.png"><img src="/software/articles/visualising-complex-structures-with-graphviz/classes-small.png" alt="LINQ-to-SQL classes"></a></p>
+<p>When I wrote this for real I went for the quick-and-dirty method and churned out a horrendous piece of code full of massive switch statements and other awful things that I’m ashamed to admit.  Thankfully that solution was accidentally deleted and will never see the light of day.  For this post I decided to make things a bit nicer, so I’m using the <a href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor pattern</a>, it’s overkill for a simple tool but this is a good example of how it helps you use the power of polymorphism without bloating your classes with extra methods that would make them less cohesive.</p>
+<p>In my case, the actual predicate classes already used the Visitor pattern so in theory I could simply have referenced the core assembly and passed in a new Visitor implementation, making things even easier.  In practice there was something of a dependency nightmare so it wasn’t an option.  Here’s the interface and some of the code I had to add to the domain classes:</p>
+<pre><code class="lang-cs"><span class="keyword">public</span> <span class="keyword">interface</span> IPredicateVisitor
+{
+  <span class="keyword">void</span> Visit(RootPredicate predicate);
+  <span class="keyword">void</span> Visit(AndPredicate predicate);
+  <span class="keyword">void</span> Visit(OrPredicate predicate);
+  <span class="keyword">void</span> Visit(ComparePredicate predicate);
+}
+</code></pre>
+<pre><code class="lang-cs"><span class="keyword">partial</span> class Predicate
+{
+  <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">Accept</span>(IPredicateVisitor visitor);
+}
+
+<span class="keyword">partial</span> class RootPredicate
+{
+  <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">Accept</span>(IPredicateVisitor visitor)
+  {
+    visitor.Visit(<span class="keyword">this</span>);
+  }
+}
+
+<span class="comment">// Repeated for each non-abstract subclass</span>
+</code></pre>
+<p>I won’t include the whole visitor implementation here (all the code is attached at the end of the post) but here is one method to illustrate the idea:</p>
+<pre><code class="lang-cs"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Visit</span>(AndPredicate predicate)
+{
+  <span class="keyword">var</span> thisId = ids.GetIdFor(predicate);
+  <span class="keyword">var</span> leftId = ids.GetIdFor(predicate.LeftChild);
+  <span class="keyword">var</span> rightId = ids.GetIdFor(predicate.RightChild);
+  <span class="keyword">var</span> extraStyling = predicate.IsDeleted ? <span class="string">",color=gray"</span> : <span class="keyword">string</span>.Empty;
+
+  writer.WriteLine(<span class="string">"{0} [label=\"And\"{1}];"</span>, thisId, extraStyling);
+  writer.WriteLine(<span class="string">"{0} -&gt; {1};"</span>, thisId, leftId);
+  writer.WriteLine(<span class="string">"{0} -&gt; {1};"</span>, thisId, rightId);
+
+  predicate.LeftChild.Accept(<span class="keyword">this</span>);
+  predicate.RightChild.Accept(<span class="keyword">this</span>);
+}
+</code></pre>
+<p>This writes 3 output lines.  The first sets the label and any styling for the graph node.  The next two link it to it’s left and right child.  Then we recurse into the left and then the right child.  I’m using an id converter class, which just contains a dictionary, to map the guid identifiers into something that GraphViz will accept (it chokes on guids, even with the hyphens removed).</p>
+<p>To invoke our visitor, we wrap it in a very simple program:</p>
+<pre><code class="lang-cs"><span class="keyword">static</span> <span class="keyword">void</span> Main(<span class="keyword">string</span>[] args)
+{
+  Console.Error.WriteLine(<span class="string">"Getting tree for predicate root id '{0}'"</span>, args[<span class="number">0</span>]);
+  Console.Error.WriteLine(<span class="string">"Using connection string '{0}'"</span>, args[<span class="number">1</span>]);
+
+  <span class="keyword">var</span> rootId = <span class="keyword">new</span> Guid(args[<span class="number">0</span>]);
+
+  <span class="keyword">using</span> (<span class="keyword">var</span> context = <span class="keyword">new</span> DataDataContext(args[<span class="number">1</span>]))
+  {
+    <span class="keyword">var</span> root = context.Predicates.Single(x =&gt; x.Id == rootId);
+
+    <span class="keyword">var</span> writer = <span class="keyword">new</span> IndentedTextWriter(Console.Out);
+
+    <span class="keyword">var</span> visitor = <span class="keyword">new</span> DotGraphPredicateVisitor(writer);
+    root.Accept(visitor);
+  }
+}
+</code></pre>
+<p>The IndentedTextWriter is pure gold-plating by the way - dot markup ignores whitespace, but it makes it easier to verify the output if we need to.  We’re going to be piping the output from this program directly into dot, so we can’t write status or diagnostic messages directly to stdout (Console.Out).  We can print these to stderr (Console.Error) which will show up on screen but won’t get redirected.</p>
+<p>If we run the program directly, passing in the id of our root predicate and a connection string, we can see the dot markup that gets produced:</p>
+<pre><code>&gt;TreeVisualiser.exe ^
+    489501F4-F170-48A6-9FE1-180165A37F1B ^
+    &quot;Data Source=localhost\sql2008;Initial Catalog=GraphVizDebugging;Integrated Security=True&quot;
+
+Getting tree for predicate root id &#39;489501F4-F170-48A6-9FE1-180165A37F1B&#39;
+Using connection string &#39;Data Source=localhost\sql2008;Initial Catalog=GraphVizDebugging;Integrated Security=True&#39;
+digraph G {
+    Root_1 [label=&quot;Root&quot;];
+    Root_1 -&gt; And_2;
+    And_2 [label=&quot;And&quot;];
+    And_2 -&gt; And_3;
+    And_2 -&gt; Compare_4;
+    And_3 [label=&quot;And&quot;];
+    And_3 -&gt; And_5;
+    And_3 -&gt; Or_6;
+    And_5 [label=&quot;And&quot;,color=gray];
+    And_5 -&gt; Compare_7;
+    And_5 -&gt; Compare_8;
+    Compare_7 [label=&quot;Date of Birth is more than 21 years ago&quot;];
+    Compare_8 [label=&quot;Date of Birth is less than 65 years ago&quot;];
+    Or_6 [label=&quot;Or&quot;];
+    Or_6 -&gt; Compare_9;
+    Or_6 -&gt; Compare_10;
+    Compare_9 [label=&quot;Location equals &#39;Reading, UK&#39;&quot;];
+    Compare_10 [label=&quot;Willing to Relocate is true&quot;];
+    Compare_4 [label=&quot;Years Experience is greater than 5&quot;];
+}
+</code></pre><p>That looks good, so we can change the command to pipe the output into dot, and redirect dot’s output to file:</p>
+<pre><code>&gt;TreeVisualiser.exe ^
+    489501F4-F170-48A6-9FE1-180165A37F1B ^
+    &quot;Data Source=localhost\sql2008;Initial Catalog=GraphVizDebugging;Integrated Security=True&quot; ^
+    | dot -Tpng &gt; out.png
+</code></pre><p>Now if we open up out.png:</p>
+<p><a href="/software/articles/visualising-complex-structures-with-graphviz/output.png"><img src="/software/articles/visualising-complex-structures-with-graphviz/output-small.png" alt="Final output"></a></p>
+<p>Now that’s something I can print out a few copies of and attack with coloured markers, while I trace through exactly why the evaluation is failing.  The deleted nodes have a grey outline so we know they’re different, and it’s easy to add more conditional styling if we want to highlight certain things or differentiate between predicate types.</p>
+<p>This might seem like a lot of work just to get a picture of what’s going on in a data structure, but I’m not kidding when I say that trying to draw the thing <em>just once</em> took me longer than the entire time I spent writing the program.  And I got the drawing wrong.  And I re-used this several times as I tweaked the decision tree.  I say: it was worth it.</p>
+<p>If you find yourself in a similar situation where you can’t figure out the internal state of something you’re debugging, consider hacking together something to help visualise it.  Tools like GraphViz make it simple to create detailed visuals, but even some well-formatted text output can be just as useful to help infer structure.  It takes less time than you might imagine, and can often save you hours of stress and hair-pulling.</p>
+<p><a href="http://www.graphviz.org/Download..php">GraphViz download page</a></p>
+<p><a href="http://www.graphviz.org/pdf/dotguide.pdf">dot user guide</a></p>
+<p><a href="/software/articles/visualising-complex-structures-with-graphviz/code.zip">Example code from this post</a></p>
+
+          <div class="details">01 February 2010  by Jon Merrifield
+          </div></div>
+        <div id="disqus_thread"></div>
+      </article>
+      <script>
+        var disqus_shortname = 'yagricom';
+        var disqus_identifier = 'Visualising Complex Structures With GraphViz';
+        var disqus_url = 'http://www.jmerrifield.com/software/articles/visualising-complex-structures-with-graphviz/';
+        
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+    </div>
+    <footer>
+      <ul class="nav">
+        <li class="icon"><a href="mailto:jon@jmerrifield.com">&#59398;</a></li>
+        <li class="icon"><a href="https://twitter.com/jon_merrifield">&#59396;</a></li>
+        <li class="icon"><a href="https://www.facebook.com/jmerrifield">&#59393;</a></li>
+        <li class="icon"><a href="http://www.linkedin.com/profile/view?id=9701957">&#59395;</a></li>
+        <li class="icon"><a href="https://github.com/jmerrifield">&#59392;</a></li>
+        <li class="icon"><a href="http://stackoverflow.com/users/74152/jon-m">&#59397;</a></li>
+        <li class="icon"><a href="https://google.com/+JonMerrifield">&#59394;</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>
