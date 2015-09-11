@@ -13,6 +13,6 @@ links:
     My posts for Onyx Snowboarding: http://blog.onyxsnowboarding.com/author/jon-merrifield/
 ---
 
-My name is Jon Merrifield, I'm a software developer living in San Francisco. I currently work at Change.org doing JavaScript with Node.js, Knockout.js and a whole load of other cool technologies.
+My name is Jon Merrifield, I'm a software developer living in Girdwood, Alaska. I'm currently Front End Tech Lead at [Change.org](https://www.change.org), working remotely.
 
-I'm also a snowboard instructor and have ridden all over the USA, Europe and New Zealand. I'm currently close to attaining the BASI ISIA qualification and hope to get their ISTD (and eventually Carte Pro) at some point.
+I'm also a snowboard instructor and have ridden all over the USA, Europe and New Zealand. I'm qualified through BASI (British Association of Snowsports Instructors). In my spare time I volunteer with [Challenge Alaska](http://www.challengealaska.org) teaching disabled people to snowboard.
